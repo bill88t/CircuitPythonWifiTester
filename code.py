@@ -26,20 +26,23 @@ try:
     print("/Loaded results.json")
 except OSError:
     log = {
-        "iterations": 0,
-        "espmem_before_env": [],
-        "espmem_before": [],
-        "espmem_after_env": [],
-        "espmem_after": [],
-        "espmem_total": None,
         "version": None,
         "board": None,
         "cpu": None,
+        "iterations": 0,
+        "Pass_env": 0,
+        "PartialFail_env": 0,
+        "CompleteFail_env": 0,
+        "Pass": 0,
+        "PartialFail": 0,
+        "CompleteFail": 0,
+        "espmem_total": None,
         "want_env": True,
         "og_networks": None,
-        "CompleteFail": 0,
-        "PartialFail": 0,
-        "Pass": 0,
+        "espmem_before_env": [],
+        "espmem_after_env": [],
+        "espmem_before": [],
+        "espmem_after": [],
     }
     print("Creating new /results.json")
 
@@ -89,20 +92,20 @@ elif log["iterations"] <= env_runs:
         print("Saved this number as a baseline.")
     elif log["og_networks"] is count:
         print("The number of networks is the same. Good.")
-        log["Pass"] += 1
+        log["Pass_env"] += 1
     elif log["og_networks"] < count:
         log["og_networks"] = count
         print("More networks detected than originally saved, updating baseline.")
-        log["Pass"] += 1
+        log["Pass_env"] += 1
     elif count is 0:
         print("Uh oh, all networks have been lost..")
-        log["CompleteFail"] += 1
+        log["CompleteFail_env"] += 1
     elif log["og_networks"] - count > 5:
         print("Lots of networks have been lost")
-        log["PartialFail"] += 1
+        log["PartialFail_env"] += 1
     else:
         print("An insignificant number of networks have been lost")
-        log["Pass"] += 1
+        log["Pass_env"] += 1
     del count
 
     print("Capturing espmem_after_env")
