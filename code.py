@@ -16,6 +16,7 @@ non_env_runs = 50
 # each must be >0
 
 # you do not need to configure anything past here
+env_runs += 1 # cuz first if for safety wasted
 non_env_runs += env_runs
 
 # Logging setup
